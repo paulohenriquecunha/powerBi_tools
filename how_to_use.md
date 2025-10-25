@@ -57,3 +57,11 @@ have a corresponding numeric column (Month Number) to keep sorting correct.
 If you add or rename columns, always create both text and numeric versions,
 so that charts and visuals in Power BI display correctly (for example, months in the right order).
 
+🧭 How to Set Column Sorting in Power BI
+
+To make sure that months or weekdays appear in the correct order in visuals:
+1. Go to the Data View in Power BI.
+2. Select the Month Name column.
+3. On the toolbar, click Sort by Column → Month Number.
+4. Do the same for other text columns (like Day of Week → Day of Week Number).
+This ensures proper chronological order instead of alphabetical sorting.
