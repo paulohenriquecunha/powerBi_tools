@@ -44,8 +44,8 @@ let
  
 in
 
-DateList```
-
+DateList
+```
 
 This adjustment ensures your calendar covers the entire range of all date columns
 (e.g., both admission and termination dates).
