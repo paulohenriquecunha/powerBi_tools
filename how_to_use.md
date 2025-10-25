@@ -1,41 +1,40 @@
-# How to Use the DimCalendar
+# How to Use the DimCalendar (Power Query)
 
-The **DimCalendar** is a Date Dimension table built in **Power Query (M Language)** that automatically generates a complete calendar based on the dates found in your fact table.  
-Even beginners can apply this model in just a few simple steps.
+The **DimCalendar** table generates a continuous list of dates that automatically adjusts to the date range in your fact table.  
+Even if you're new to Power BI, you can apply this model in just a few steps.
 
 ---
 
-## 🧭 Step-by-step
+## 🪜 Steps
 
 1. In Power BI, go to **Home → Transform Data → Power Query Editor**.  
-2. From the top menu, select **New Source → Blank Query**.  
-3. Open the **Advanced Editor** (top-right icon).  
-4. Delete the default content and paste the **full DimCalendar code**.  
-5. Replace `fTable[date]` with the name of your date column in your fact table (for example, `FactSales[SaleDate]`).  
-6. Click **Done → Close & Apply**.  
-7. In Power BI Desktop, mark the table as a **Date Table**.
+2. From the top menu, click **New Source → Blank Query**.  
+3. Open the **Advanced Editor** (icon in the upper right corner).  
+4. Delete the default content and paste the full DimCalendar code.  
+5. Replace `fStatus[data]` with the name of your date column from your fact table.  
+6. Click **Done → Close & Apply**.
 
 ---
 
-## 🧩 When you have more than one date table or multiple date columns
+## 📅 When You Have Multiple Date Columns
 
-If you have **one or more tables containing multiple date columns** (for example, *admission date* and *termination date*), you need to make a small adjustment to the original code.
+If you have one or more tables that include multiple date fields  
+(for example, *admission date* and *termination date*),  
+you just need a small adjustment — define the **minimum** and **maximum** date  
+from all those tables before creating the date list.
 
-In the standard DimCalendar, we use only one date field (`fTable[date]`) to determine the minimum and maximum range.  
-When multiple tables or date fields exist, we must combine these values before generating the date list.
-
-Here’s how you can do it:
+Here’s a clear example:
 
 ```powerquery
 let
     
-    MinTable1 = List.Min(income_expenses[date]),  
-    MinTable2 = List.Min(cash_balance[date]),  
-    MinTable3 = List.Min(future_cash_balance[date]),  
+    MinTable1 = List.Min(receitas_despesas[data]),  
+    MinTable2 = List.Min(saldo_caixa[data]),  
+    MinTable3 = List.Min(saldo_caixa_futuro[data]),  
 
-    MaxTable1 = List.Max(income_expenses[date]),
-    MaxTable2 = List.Max(cash_balance[date]),
-    MaxTable3 = List.Max(future_cash_balance[date]),
+    MaxTable1 = List.Max(receitas_despesas[data]),
+    MaxTable2 = List.Max(saldo_caixa[data]),
+    MaxTable3 = List.Max(saldo_caixa_futuro[data]),
 
     StartDate = List.Min({MinTable1, MinTable2, MinTable3}),
     EndDate = List.Max({MaxTable1, MaxTable2, MaxTable3}),
@@ -44,15 +43,15 @@ let
     DateList = List.Dates(StartDate, TotalDays, #duration(1,0,0,0))
  
 in
-    DateList
-This small modification ensures that the calendar covers all dates from all related tables, generating a full and consistent date range.
 
-After obtaining the date list, simply continue with the regular DimCalendar code to add columns like Year, Month, Quarter, and others.
+DateList```
 
-📚 Tip
-You can also find this example in the same repository, in the file named “how_to_use”, next to the main DimCalendar script.
 
-✍️ Author
-Paulo Henrique Pereira da Cunha
-Data Analyst | Power BI | Python | SQL
-📍 Cascais, Portugal
+This adjustment ensures your calendar covers the entire range of all date columns
+(e.g., both admission and termination dates).
+
+🔢 Sorting and Formatting Notes
+Text columns such as Month Name ("January", "February")
+have a corresponding numeric column (Month Number) to keep sorting correct.
+If you add or rename columns, always create both text and numeric versions,
+so that charts and visuals in Power BI display correctly (for example, months in the right order).
