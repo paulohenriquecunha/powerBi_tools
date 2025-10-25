@@ -1,30 +1,30 @@
-# Como Usar o DimCalendário
+# Como Usar o DimCalendário (Power Query)
 
-O **DimCalendário** é uma tabela de datas criada em **Power Query (M Language)** que gera automaticamente um calendário completo com base nas datas existentes na sua tabela fato.  
-Mesmo quem está começando pode aplicar este modelo em poucos passos.
+A tabela **DimCalendário** cria uma lista contínua de datas que se ajusta automaticamente  
+ao intervalo de datas existente na sua tabela fato.  
+Mesmo quem está começando pode aplicar esse modelo em poucos passos.
 
 ---
 
-## 🧭 Passo a passo
+## 🪜 Passo a Passo
 
 1. No Power BI, vá até **Página Inicial → Transformar Dados → Editor do Power Query**.  
 2. No menu superior, clique em **Nova Fonte → Consulta em Branco**.  
 3. Abra o **Editor Avançado** (ícone no canto superior direito).  
-4. Apague o conteúdo padrão e cole o **código completo do DimCalendário**.  
-5. Substitua o campo `fTabela[data]` pelo nome da sua coluna de data na tabela fato (por exemplo, `FatoVendas[DataVenda]`).  
-6. Clique em **Concluir → Fechar e Aplicar**.  
-7. No Power BI Desktop, marque a tabela como **Tabela de Datas**.
+4. Apague o conteúdo padrão e cole o código completo do DimCalendário.  
+5. Substitua `fStatus[data]` pelo nome da sua coluna de data na tabela fato.  
+6. Clique em **Concluir → Fechar e Aplicar**.
 
 ---
 
-## 🧩 Caso com mais de uma tabela de datas
+## 📅 Quando Existem Várias Colunas de Data
 
-Se houver **uma ou mais tabelas com várias colunas de data** (por exemplo, *data de admissão* e *data de demissão*), será necessário fazer uma pequena alteração no código original.
+Se você tiver uma ou mais tabelas com várias colunas de data  
+(por exemplo, *data de admissão* e *data de demissão*),  
+é preciso fazer uma pequena alteração: definir a **menor** e a **maior** data  
+entre todas as tabelas antes de gerar a lista de datas.
 
-No seu DimCalendário padrão, usamos apenas uma fonte de data (`fTabela[data]`) para definir o intervalo mínimo e máximo.  
-Quando há várias tabelas ou campos de data, precisamos combinar esses valores antes de gerar a lista de datas.
-
-Veja o exemplo abaixo:
+Veja o exemplo:
 
 ```powerquery
 let
@@ -44,12 +44,16 @@ let
     ListaDatas = List.Dates(DataInicio, QuantidadeDias, #duration(1,0,0,0))
  
 in
-    ListaDatas
-Essa modificação permite que o calendário cubra automaticamente todas as datas de todas as tabelas, garantindo um intervalo completo.
 
-Depois de obter a lista de datas, basta continuar o código normal do DimCalendário, adicionando colunas de ano, mês, trimestre, etc.
+ListaDatas
+```
 
-✍️ Autor
-Paulo Henrique Pereira da Cunha
-Data Analyst | Power BI | Python | SQL
-📍 Cascais, Portugal
+Essa modificação garante que o seu calendário cubra todo o intervalo
+de todas as colunas de data (por exemplo, admissão e demissão).
+
+🔢 Sobre Classificação e Formatação
+
+As colunas de texto, como o nome do mês (Janeiro, Fevereiro),
+têm uma coluna equivalente em formato numérico (Mês Número) para manter a ordem correta.
+Sempre que criar ou renomear colunas, lembre-se de manter a versão numérica correspondente,
+para que os gráficos e visuais do Power BI mostrem os meses na sequência certa.
