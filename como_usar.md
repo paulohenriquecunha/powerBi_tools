@@ -57,3 +57,12 @@ As colunas de texto, como o nome do mês (Janeiro, Fevereiro),
 têm uma coluna equivalente em formato numérico (Mês Número) para manter a ordem correta.
 Sempre que criar ou renomear colunas, lembre-se de manter a versão numérica correspondente,
 para que os gráficos e visuais do Power BI mostrem os meses na sequência certa.
+
+🧭 Como Fazer a Classificação no Power BI
+
+Para garantir que os meses ou dias da semana fiquem na ordem correta:
+1. Vá até a Exibição de Dados no Power BI.
+2. Selecione a coluna Mês Nome.
+3. No menu superior, clique em Classificar por Coluna → Mês Número.
+4. Repita o mesmo processo para outras colunas de texto (como Dia da Semana → Dia da Semana Número).
+Isso garante que o Power BI exiba os valores em ordem cronológica, e não alfabética.
