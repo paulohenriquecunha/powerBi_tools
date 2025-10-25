@@ -51,7 +51,9 @@ This adjustment ensures your calendar covers the entire range of all date column
 (e.g., both admission and termination dates).
 
 🔢 Sorting and Formatting Notes
+
 Text columns such as Month Name ("January", "February")
 have a corresponding numeric column (Month Number) to keep sorting correct.
 If you add or rename columns, always create both text and numeric versions,
 so that charts and visuals in Power BI display correctly (for example, months in the right order).
+
