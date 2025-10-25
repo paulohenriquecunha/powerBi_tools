@@ -1,2 +1,3 @@
-# powerBi_tools
-Useful Power BI tools and scripts.
+# Power BI Tools
+
+This repository gathers useful tools and scripts for Power BI.
