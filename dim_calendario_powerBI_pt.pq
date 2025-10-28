@@ -1,14 +1,22 @@
 let
     // limites vindos da fato
-    min_data    = Date.From(List.Min(fTabela[data])),
-    max_data    = Date.From(List.Max(fTabela[data])),
+    MinTabela1 = List.Min(receitas_despesas[data]),
+    MinTabela2 = List.Min(saldo_caixa[data]),
+    MinTabela3 = List.Min(saldo_caixa_futuro[data]),
+
+    MaxTabela1 = List.Max(receitas_despesas[data]),
+    MaxTabela2 = List.Max(saldo_caixa[data]),
+    MaxTabela3 = List.Max(saldo_caixa_futuro[data]),
+
+    DataInicio = List.Min({MinTabela1, MinTabela2, MinTabela3}),
+    DataFim    = List.Max({MaxTabela1, MaxTabela2, MaxTabela3}),
 
     // lista diária contínua
-    qtd_dias    = Duration.Days(max_data - min_data) + 1,
-    lista_datas = List.Dates(min_data, qtd_dias, #duration(1,0,0,0)),
+    QuantidadeDias = Duration.Days(DataFim - DataInicio) + 1,
+    ListaDatas     = List.Dates(DataInicio, QuantidadeDias, #duration(1,0,0,0)),
 
     // transformar em TABELA com a coluna data
-    to_table = Table.FromList(lista_datas, Splitter.SplitByNothing(), {"data"}),
+    to_table = Table.FromList(ListaDatas, Splitter.SplitByNothing(), {"data"}),
     typed    = Table.TransformColumnTypes(to_table, {{"data", type date}}),
 
     // colunas essenciais
@@ -24,7 +32,7 @@ let
     trimestre     = Table.AddColumn(trimestre_num, "trimestre", each "T" & Number.ToText([trimestre_num]), type text),
 
     // chaves e granularidades
-    data_key    = Table.AddColumn(trimestre, "data_key", each Number.FromText(Date.ToText([data], "yyyyMMdd")), Int64.Type),
+    data_key = Table.AddColumn(trimestre, "data_key", each Number.FromText(Date.ToText([data], "yyyyMMdd")), Int64.Type),
 
     // dia e semana
     dia_mes         = Table.AddColumn(data_key, "dia_mes", each Date.Day([data]), Int64.Type),
