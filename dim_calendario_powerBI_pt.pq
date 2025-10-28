@@ -1,15 +1,10 @@
 let
     // limites vindos da fato
     MinTabela1 = List.Min(receitas_despesas[data]),
-    MinTabela2 = List.Min(saldo_caixa[data]),
-    MinTabela3 = List.Min(saldo_caixa_futuro[data]),
-
     MaxTabela1 = List.Max(receitas_despesas[data]),
-    MaxTabela2 = List.Max(saldo_caixa[data]),
-    MaxTabela3 = List.Max(saldo_caixa_futuro[data]),
-
-    DataInicio = List.Min({MinTabela1, MinTabela2, MinTabela3}),
-    DataFim    = List.Max({MaxTabela1, MaxTabela2, MaxTabela3}),
+   
+    DataInicio = List.Min({MinTabela1}),
+    DataFim    = List.Max({MaxTabela1}),
 
     // lista diária contínua
     QuantidadeDias = Duration.Days(DataFim - DataInicio) + 1,
